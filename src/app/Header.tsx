@@ -4,7 +4,7 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <header className="flex flex-col items-center md:flex-row md: justify-between ">
+    <header className="flex flex-col items-center md:flex-row md: justify-between mb-10">
       <Image
         className="h-full py-6"
         src="/Booki.png"

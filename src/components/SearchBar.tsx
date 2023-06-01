@@ -11,7 +11,7 @@ export default function SearchBar({onClick, onChange}:any) {
 
 
   return (
-    <div className="py-10 px-10 md:px-0" id="search">
+    <div className="pb-10 px-10 md:px-0" id="search">
       <h1 className="font-bold text-2xl py-2">
         Trouvez votre hébergement pour des vacances de rêve
       </h1>

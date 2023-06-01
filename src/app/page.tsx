@@ -1,129 +1,88 @@
-"use client"
+"use client";
 
+import { getHotels } from "@/pages/api/api";
 import Activities from "@/components/Activities";
 import FilterBar from "@/components/FilterBar";
-import Housings from "@/components/Housings";
-import Populars from "@/components/Populars";
+
 import SearchBar from "@/components/SearchBar";
-import { FirebaseApp, initializeApp } from "firebase/app";
-import { DocumentData,
-  Firestore,
-  collection,
-  getDocs,
-  getFirestore,
-  query,
-  where, } from "firebase/firestore";
+import { DocumentData } from "firebase/firestore";
 import { useEffect, useState } from "react";
+import Gallery from "@/components/Gallery";
+import Link from "next/link";
+import Card from "@/components/Card";
 
 
-const firebaseConfig = {
-  apiKey: process.env.API_KEY,
-  authDomain: process.env.AUTH_DOMAIN,
-  projectId: "projet-booki",
-  storageBucket: "projet-booki.appspot.com",
-  messagingSenderId: process.env.MESSAGING_SENDER_ID,
-  appId: process.env.APP_ID,
-  measurementId: process.env.MEASUREMENT_ID,
-};
 
-const app:FirebaseApp = initializeApp(firebaseConfig);
-const db:Firestore = getFirestore(app);
-
-export default function Home() {
- 
+export default  function Home() {
   const [hotels, setHotels] = useState<DocumentData[]>([]);
-  const [bestHotels,setBestHotels] = useState<DocumentData[]>([]);
+  const [bestHotels, setBestHotels] = useState<DocumentData[]>([]);
   const [isLoading, setLoading] = useState(false);
-  const [city, setCity] = useState ("Marseille")
-  const [tag, setTag] = useState("")
-  const [filterIsActive, setFilter] = useState (false)
-  const [filteredHotlels, setFilterdeHotels]= useState<DocumentData[]>([])
-  const [activities, setActivities] = useState<DocumentData[]>([])
-  const [input,setInput] = useState("")
+  const [city, setCity] = useState("Marseille");
+  const [tag, setTag] = useState("");
+  const [input, setInput] = useState("");
 
-  
+  const handleClick = (e: SubmitEvent) => {
+    e.preventDefault;
+    setTag("");
+    setCity(input);
+  };
+  const handleChange = (e: any) => {
+    setInput(e.target.value);
+  };
 
-  
-  const handleClick = (e:SubmitEvent) =>{
-    e.preventDefault
-    console.log(input)
-    setTag("")
-    setCity(input)
-   
-  }
-  const handleChange = (e:any) => {
-   setInput(e.target.value)
-   
+  const filter = (e: any) => {
+    const filter = e.target.id;
+    setTag(filter);
+  };
 
-  }
-
-  const filter = (e:any) => {
-    // !filterIsActive ? setFilter(true) : setFilter(false)
-    const filter = e.target.id
-    setTag(filter)
-  }
- 
   useEffect(() => {
-    
-    const getData = async (city: string, tag: string) => {
-      try {
-        setLoading(true);
-        const dataRef = collection(db, "hotels");
-        const datas = query(dataRef, where("city", "==", city));
-        const querySnapshot = await getDocs(datas);
+    const displayHotels = async () => {
+      const result = await getHotels(city);
+      const filteredHotlels = result.filter((hotel) => hotel.tag === tag);
+      const bestHotels = result.filter((hotel) => hotel.rating > 4);
 
-        const hotelList = querySnapshot.docs.map((doc) => doc.data());
-        const filteredHotlels = hotelList.filter((hotel) => hotel.tag === tag)
-        const bestHotels = hotelList.filter((hotel)=>hotel.rating > 4)
-  
-        
-        if (tag !="") {setHotels(filteredHotlels)}
-        else {setHotels(hotelList)}
-        
-        ;
-        setBestHotels(bestHotels)
-
-      } catch (error) {
-        console.log(error);
+      if (tag != "") {
+        setHotels(filteredHotlels);
+      } else {
+        setHotels(result);
       }
+      setBestHotels(bestHotels);
     };
- 
-   const getActivities = async (city:string) => {
-    try {
-      setLoading(true)
-      const dataRef= collection(db, "activities")
-      const datas = query(dataRef, where("city", "==", city))
-      const querySnapshot = await getDocs(datas)
-      const activities = querySnapshot.docs.map((doc)=>doc.data())
 
-      setActivities(activities)
-    } catch (error) {
-      console.log(error)
-    }
-   }
-    
-    
-    getData(city, tag);
-    getActivities(city)
-    setLoading(false);
-
-
+    displayHotels();
   }, [city, tag]);
 
-
- 
- 
   return (
-
     <main>
-      <SearchBar onClick={handleClick} onChange={handleChange}/>
-      <FilterBar activeFilter={filter}/>
+      <SearchBar onClick={handleClick} onChange={handleChange} />
+      <FilterBar activeFilter={filter} />
       <div className="flex gap-6 flex-col-reverse  xl:flex-row ">
-        <Housings  hotels={hotels}  city={city}/>
-        
-        <Populars hotels={bestHotels}/>
+        <Gallery
+          title={`Hébergements à ${city}`}
+          size="w-full xl:w-2/3"
+          gridCol="grid-cols-1 md:grid-cols-3"
+        >
+          {hotels.map((hotel: DocumentData, index: number) => (
+            <Link href={`/Retails/${hotel.id}`} key={index}>
+              <Card cardItem={hotel} cardStyle={"col"} />
+            </Link>
+          ))}
+        </Gallery>
+
+        <Gallery
+          title="Les plus populaires"
+          size="w-full xl:w-1/3"
+          gridCol="grid-cols-1"
+        >
+          {bestHotels.map((hotel: DocumentData, index: number) => (
+            <Link href={`/Retails/${hotel.id}`} key={index}>
+              <Card cardItem={hotel} key={index} cardStyle={"row"} />
+            </Link>
+          ))}
+        </Gallery>
+
       </div>
-      <Activities activities={activities} city={city}/>
+      <Activities city={city} />
     </main>
   );
 }
