@@ -23,13 +23,13 @@ export default async function Retails() {
           <span>0 commentaire</span>
           <span>Genre : {hotel[0].tag}</span>
         </div>
-        <div className="flex gap-6 rounded-2xl my-10 ">
+        <div className="flex flex-col md:flex-row gap-6 rounded-2xl my-10 ">
           <Image
             src={hotel[0].image}
             alt="chambre d'hôtel"
             width={600}
             height={600}
-            className="h-96  rounded-l-2xl object-cover"
+            className="h-96 m-auto md:w-[300px] lg:w-[400px] xl:w-auto md:rounded-l-2xl object-cover"
           ></Image>
           <div className="flex flex-col justify-between gap-6 p-6 ">
             <div>

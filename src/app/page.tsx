@@ -17,7 +17,12 @@ export default function Home() {
   const [tag, setTag] = useState("");
 
 
-  const search = (data:Inputs)=>{setCity(data.city)}
+  const search = (data:Inputs)=>{
+    // gestion majuscule
+    let result = data.city
+    result = result[0].toUpperCase()+result.slice(1)
+    setCity(result)
+  }
 
   const filter = (e : any) => {
     const filter = e.target.id;
