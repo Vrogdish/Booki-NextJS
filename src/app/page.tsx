@@ -1,37 +1,27 @@
 "use client";
 
-import { getHotels } from "@/pages/api/api";
+import { getHotels } from "@/api/api";
 import Activities from "@/components/Activities";
 import FilterBar from "@/components/FilterBar";
-
-import SearchBar from "@/components/SearchBar";
+import SearchBar, { Inputs } from "@/components/SearchBar";
 import { DocumentData } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import Gallery from "@/components/Gallery";
 import Link from "next/link";
 import Card from "@/components/Card";
 
-
-
-export default  function Home() {
+export default function Home() {
   const [hotels, setHotels] = useState<DocumentData[]>([]);
   const [bestHotels, setBestHotels] = useState<DocumentData[]>([]);
-  const [isLoading, setLoading] = useState(false);
   const [city, setCity] = useState("Marseille");
   const [tag, setTag] = useState("");
-  const [input, setInput] = useState("");
 
-  const handleClick = (e: SubmitEvent) => {
-    e.preventDefault;
-    setTag("");
-    setCity(input);
-  };
-  const handleChange = (e: any) => {
-    setInput(e.target.value);
-  };
 
-  const filter = (e: any) => {
+  const search = (data:Inputs)=>{setCity(data.city)}
+
+  const filter = (e : any) => {
     const filter = e.target.id;
+    filter === "Tous" ? setTag(""):
     setTag(filter);
   };
 
@@ -54,8 +44,8 @@ export default  function Home() {
 
   return (
     <main>
-      <SearchBar onClick={handleClick} onChange={handleChange} />
-      <FilterBar activeFilter={filter} />
+      <SearchBar onSubmit={search} />
+      <FilterBar filter={filter} />
       <div className="flex gap-6 flex-col-reverse  xl:flex-row ">
         <Gallery
           title={`Hébergements à ${city}`}
@@ -80,7 +70,6 @@ export default  function Home() {
             </Link>
           ))}
         </Gallery>
-
       </div>
       <Activities city={city} />
     </main>

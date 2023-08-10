@@ -1,11 +1,11 @@
 "use client";
-import { getActivities } from "@/pages/api/api";
+import { getActivities } from "@/api/api";
 import { DocumentData } from "firebase/firestore";
 import Image from "next/image";
 
 import React, { useEffect, useState } from "react";
 
-export default function Activities( {city}:DocumentData ) {
+export default function Activities({ city }: any) {
   const [activities, setActivities] = useState<DocumentData[]>([]);
 
   useEffect(() => {
