@@ -66,15 +66,15 @@ export default function FilterBar({filter}:Props) {
 
 
   return (
-    <div className="mb-10">
-    <div className="my-6 grid grid-cols-2 gap-10 px-10 lg:grid-cols-4 md:px-0 ">
+    <div className="mb-10 px-2">
+    <div className="my-6 grid md:grid-cols-2 gap-10 px-10 lg:grid-cols-4 md:px-0 ">
       {filterList.map((element,index)=>(
         <button key={index} 
           onClick={(e : any)=>{filter(e);setActivefilter(index)}}
           className= {`px-6 py-3 border-2 rounded-full font-bold hover:bg-blue-200 transition-all ${activeFilter===index?"bg-blue-200":""}`} id={element.title}>{element.icone}{element.title}</button>
       ))}
     </div>
-    <span >Plus de 500 logements disponibles dans cette ville</span>
+    <span className="" >Plus de 500 logements disponibles dans cette ville</span>
     </div>
   );
 }

@@ -18,7 +18,7 @@ export default async function Retails() {
         <h1 className="font-bold text-2xl py-2 ">
           {hotel[0].name} - {hotel[0].city}
         </h1>
-        <div className="flex items-center gap-10">
+        <div className="flex flex-col items-start md:flex-row  md:items-center md:gap-10">
           <Rating hotel={hotel[0]}></Rating>
           <span>0 commentaire</span>
           <span>Genre : {hotel[0].tag}</span>
