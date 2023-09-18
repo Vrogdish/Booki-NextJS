@@ -1,5 +1,5 @@
 "use client";
-import { getActivities } from "@/api/api";
+import { getActivities } from "@/api/hotelsData";
 import { DocumentData } from "firebase/firestore";
 import Image from "next/image";
 

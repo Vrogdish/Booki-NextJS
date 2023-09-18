@@ -14,9 +14,6 @@ interface Props {
 
 export default function FilterBar({filter}:Props) {
   const [activeFilter , setActivefilter] = useState(0)
-
-  console.log(activeFilter)
-
   const filterList = [
     {
       icone : (
@@ -61,8 +58,6 @@ export default function FilterBar({filter}:Props) {
     },
 
   ];
-
-
 
 
   return (

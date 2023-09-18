@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import { DocumentData } from "firebase/firestore";
 import Rating from "./Rating";
+import { Hotel } from "@/types/data-firebase";
 
 
 
@@ -10,7 +11,7 @@ export default function Card({
   cardItem,
   cardStyle,
 }: {
-  cardItem: DocumentData;
+  cardItem: Hotel;
   cardStyle: string;
 }) {
 

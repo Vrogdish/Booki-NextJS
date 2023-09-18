@@ -1,11 +1,12 @@
 "use client";
 
-import { getHotelRetails } from "@/api/api";
+import { getHotelRetails } from "@/api/hotelsData";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import Rating from "@/components/Rating";
 import Activities from "@/components/Activities";
 import ScrollToTop from "@/utils/ScrollToTop";
+import BookIt from "@/components/BookIt";
 
 export default async function Retails() {
   const params: any = useParams();
@@ -23,15 +24,16 @@ export default async function Retails() {
           <span>0 commentaire</span>
           <span>Genre : {hotel[0].tag}</span>
         </div>
-        <div className="flex flex-col md:flex-row gap-6 rounded-2xl my-10 ">
-          <Image
-            src={hotel[0].image}
-            alt="chambre d'hôtel"
-            width={600}
-            height={600}
-            className="h-96 m-auto md:w-[300px] lg:w-[400px] xl:w-auto md:rounded-l-2xl object-cover"
-          ></Image>
-          <div className="flex flex-col justify-between gap-6 p-6 ">
+        <div className="flex flex-col xl:flex-row gap-6 rounded-2xl my-10 ">
+          <div className="h-96 m-auto w-full xl:rounded-l-2xl lg:min-w-[400px] relative">
+            <Image
+              src={hotel[0].image}
+              fill
+              alt="chambre d'hôtel"
+              className="absolute h-96 xl:rounded-l-2xl w-full object-cover"
+            ></Image>
+          </div>
+          <div className="flex flex-col justify-between gap-6 md:p-6 ">
             <div>
               <h3 className="font-bold">Description:</h3>
               <p>{hotel[0].describe}</p>
@@ -40,12 +42,12 @@ export default async function Retails() {
               <h3 className="font-bold">Tarif :</h3>
               <p> Nuit à partir de {hotel[0].price} €</p>
             </div>
+            <BookIt hotel={hotel[0]} />
           </div>
         </div>
       </div>
       <Activities city={hotel[0].city} />
-      <ScrollToTop/>
+      <ScrollToTop />
     </div>
-    
   );
 }

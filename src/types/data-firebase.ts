@@ -1,4 +1,4 @@
-export interface hotel {
+export interface Hotel {
   id: number;
   name: string;
   city: string;
@@ -7,4 +7,5 @@ export interface hotel {
   rating: number;
   tag: string;
   comments: string[];
+  describe : string
 }
