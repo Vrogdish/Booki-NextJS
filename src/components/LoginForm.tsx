@@ -20,11 +20,10 @@ export default function LoginForm() {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     await logIn(data.email, data.password)
-    console.log(status);
   };
 
   return (
-    <form action="" className="flex flex-col justify-between h-96" onSubmit={handleSubmit(onSubmit)} >
+    <form className="flex flex-col justify-between h-96" onSubmit={handleSubmit(onSubmit)} >
       <div className="flex flex-col px-8 gap-4 ">
         <div className="flex flex-col w-full gap-2">
           <label htmlFor="email">Adresse email :</label>
@@ -36,7 +35,7 @@ export default function LoginForm() {
         </div>
         <div className="text-gray-400 text-right">mot de passe oublié ?</div>
       </div>
-      <Button type="submit" className="">
+      <Button type="submit" >
         Me connecter
       </Button>
     </form>

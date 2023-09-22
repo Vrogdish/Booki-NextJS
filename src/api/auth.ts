@@ -1,13 +1,16 @@
-import { auth, db } from "@/config/firebase";
+import {  auth, db } from "@/firebase/config";
 import { SignUpInputs } from "@/types/inputs";
 import { FirebaseError } from "firebase/app";
 import {
   UserCredential,
   createUserWithEmailAndPassword,
+  getAuth,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { Firestore, doc, getFirestore, setDoc } from "firebase/firestore";
+
+
 
 export const signUp = async (user: SignUpInputs) => {
   try {

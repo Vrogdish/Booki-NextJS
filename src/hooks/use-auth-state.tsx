@@ -1,4 +1,4 @@
-import { auth, db } from "@/config/firebase";
+import { auth, db } from "@/firebase/config";
 import { UserInterface } from "@/types/user";
 import { User, onAuthStateChanged } from "firebase/auth";
 import { doc, onSnapshot } from "firebase/firestore";
@@ -10,7 +10,7 @@ export default function useAuthState() {
 
   const formatUserProfile = (user: UserInterface) => ({
     uid: user.uid,
-    email: user.email
+    email: user.email,
   });
 
   const getUserProfil = async (user: UserInterface) => {
@@ -36,7 +36,7 @@ export default function useAuthState() {
       setAuthUserIsLoading(false);
       return;
     }
-    
+
     setAuthUserIsLoading(true);
     const formatedProfil = formatUserProfile(authState);
     await getUserProfil(formatedProfil);
@@ -46,8 +46,8 @@ export default function useAuthState() {
     const unsubscribe = onAuthStateChanged(auth, authStateChanged);
 
     return () => unsubscribe();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return {
     authUser,
