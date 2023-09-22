@@ -9,3 +9,11 @@ export interface Hotel {
   comments: string[];
   describe : string
 }
+
+
+export interface Activity {
+  id : number
+  city : string
+  image : string
+  title :string
+}

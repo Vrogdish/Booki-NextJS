@@ -6,7 +6,7 @@ import {
   getDefaultEndDate,
   getDefaultStartDate,
 } from "@/utils/date";
-import React, { useEffect, useRef, useState } from "react";
+import React, {  useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
 interface Props {
@@ -58,11 +58,10 @@ export default function BookIt({ hotel, className }: Props) {
   };
 
   return (
-    <div className={`${className}`}>
       <form
         onSubmit={handleSubmit(onSubmit)}
         action=""
-        className="flex  flex-col items-center md:flex-row gap-6 justify-between md:items-start bg-white rounded-2xl p-6"
+        className="flex  flex-col items-center md:flex-row gap-6 justify-between md:items-start bg-white rounded-2xl p-6 "
       >
         <div className="flex flex-col gap-4">
           <p>Période :</p>
@@ -118,6 +117,5 @@ export default function BookIt({ hotel, className }: Props) {
           </button>
         </div>
       </form>
-    </div>
   );
 }

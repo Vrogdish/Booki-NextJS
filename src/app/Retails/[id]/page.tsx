@@ -7,6 +7,7 @@ import Rating from "@/components/Rating";
 import Activities from "@/components/Activities";
 import ScrollToTop from "@/utils/ScrollToTop";
 import BookIt from "@/components/BookIt";
+import Container from "@/components/Container";
 
 export default async function Retails() {
   const params: any = useParams();
@@ -14,17 +15,15 @@ export default async function Retails() {
   const hotel = await getHotelRetails(id);
 
   return (
+   
     <div>
-      <div className=" bg-gray-100 p-8 md:rounded-2xl">
-        <h1 className="font-bold text-2xl py-2 ">
-          {hotel[0].name} - {hotel[0].city}
-        </h1>
+       <Container title= {`${hotel[0].name} - ${hotel[0].city}`} color="gray">
         <div className="flex flex-col items-start md:flex-row  md:items-center md:gap-10">
           <Rating hotel={hotel[0]}></Rating>
           <span>0 commentaire</span>
           <span>Genre : {hotel[0].tag}</span>
         </div>
-        <div className="flex flex-col xl:flex-row gap-6 rounded-2xl my-10 ">
+        <div className="flex flex-col xl:flex-row gap-6 rounded-2xl  ">
           <div className="h-96 m-auto w-full xl:rounded-l-2xl lg:min-w-[400px] relative">
             <Image
               src={hotel[0].image}
@@ -45,8 +44,10 @@ export default async function Retails() {
             <BookIt hotel={hotel[0]} />
           </div>
         </div>
-      </div>
+      </Container>
+
       <Activities city={hotel[0].city} />
+
       <ScrollToTop />
     </div>
   );

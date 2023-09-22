@@ -29,6 +29,6 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "src/app/firebaseConfig.tsx"
-  ],
+, "src/api/auth.ts"  ],
   "exclude": ["node_modules"]
 }

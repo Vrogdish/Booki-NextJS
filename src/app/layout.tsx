@@ -5,6 +5,7 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 import { config } from "@fortawesome/fontawesome-svg-core";
 import Footer from './Footer';
 import { Metadata } from 'next';
+import { AuthUserProvider } from '@/context/AuthUserContext';
 
 
 config.autoAddCss = false; 
@@ -25,9 +26,11 @@ export default function RootLayout({
     <html lang="fr">
    
       <body className={`${inter.className} md:px-10`}>
+        <AuthUserProvider>
         <Header/>
         {children}
         <Footer/>
+        </AuthUserProvider>
         </body>
     </html>
   )
