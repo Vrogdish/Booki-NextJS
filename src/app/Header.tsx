@@ -14,8 +14,7 @@ export default function Header() {
     " cursor-pointer py-6 text-center w-full border-b-2 hover:border-blue-600 md:border-t-2 md:border-transparent hover:text-blue-600 md:border-b-0 md:hover:border-t-2 md:hover:border-blue-600 transition-all " ;
 
   const {authUser, authUserIsLoading} = useAuthState()  
-console.log('authUser :>> ', authUser);
-console.log('authUserIsLoading :>> ', authUserIsLoading);
+
 
 useEffect(()=>{
   if (authUser && authUserIsLoading === false) {

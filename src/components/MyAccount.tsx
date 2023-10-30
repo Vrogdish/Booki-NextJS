@@ -3,6 +3,7 @@ import Button from "./Button";
 import { logOut } from "@/api/auth";
 import Container from "./Container";
 import { UserInterface } from "@/types/user";
+import Announcement from "./Announcement";
 
 interface Props {
   user: UserInterface | null;
@@ -50,7 +51,7 @@ export default function MyAccount({ user }: Props) {
         >
           Se deconnecter
         </Button>
-      </div>
+             </div>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 "use client";
 
+import Announcement from "@/components/Announcement";
 import Container from "@/components/Container";
 import LoginForm from "@/components/LoginForm";
 import MyAccount from "@/components/MyAccount";
@@ -19,7 +20,8 @@ export default function Signup() {
     }
   },[authUser, authUserIsLoading])
 
- 
+
+  
   if (isLogin === false ) {
     return (
       <div>
@@ -41,13 +43,17 @@ export default function Signup() {
             <SignUpForm />
           </Container>
         </div>
+        <Announcement/>
       </div>
+
     );
   } else {
     return (
       <div>
         <MyAccount user={authUser} />
+        <Announcement/>
       </div>
     );
   }
 }
+

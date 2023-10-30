@@ -1,4 +1,6 @@
 "use client";
+import { useAuth } from "@/context/AuthUserContext";
+import { auth } from "@/firebase/config";
 import { Hotel } from "@/types/data-firebase";
 import {
   addDaysToDate,
@@ -6,6 +8,7 @@ import {
   getDefaultEndDate,
   getDefaultStartDate,
 } from "@/utils/date";
+import { useRouter } from "next/navigation";
 import React, {  useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 
@@ -34,6 +37,9 @@ export default function BookIt({ hotel, className }: Props) {
     formState: { errors },
   } = useForm<Inputs>();
 
+  const {authUser, authUserIsLoading} = useAuth()
+  const router = useRouter()
+
   const otherPers = +watch("otherPersInput", "0");
 
   const duration =
@@ -41,7 +47,16 @@ export default function BookIt({ hotel, className }: Props) {
 
   const price = hotel.price * duration + otherPers * 20;
 
-  const onSubmit: SubmitHandler<Inputs> = (data) => console.log(data);
+  const onSubmit: SubmitHandler<Inputs> = (data) => {
+    if (authUser && authUserIsLoading === false) {
+      console.log(data)
+      alert("reservation effectuée")
+    } else {
+      router.push("/Account")
+    }
+     
+    
+  };
 
   const onChangeStartDate = (e: any) => {
     const start = new Date(e.target.value);
@@ -58,6 +73,7 @@ export default function BookIt({ hotel, className }: Props) {
   };
 
   return (
+    <div className={`${className}`}>
       <form
         onSubmit={handleSubmit(onSubmit)}
         action=""
@@ -117,5 +133,6 @@ export default function BookIt({ hotel, className }: Props) {
           </button>
         </div>
       </form>
+      </div>
   );
 }
