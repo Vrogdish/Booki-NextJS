@@ -7,4 +7,12 @@ export interface SignUpInputs {
     password: string;
     confirm: string;
   }
+
+
+export interface EditorInputs {
+  lastname: string;
+  firstname: string;
+  adress: string;
+  city: string;
+}
   

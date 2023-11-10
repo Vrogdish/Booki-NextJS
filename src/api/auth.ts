@@ -1,16 +1,14 @@
-import {  auth, db } from "@/firebase/config";
-import { SignUpInputs } from "@/types/inputs";
+import { auth, db } from "@/firebase/config";
+import { EditorInputs, SignUpInputs } from "@/types/inputs";
 import { FirebaseError } from "firebase/app";
 import {
   UserCredential,
   createUserWithEmailAndPassword,
-  getAuth,
   signInWithEmailAndPassword,
   signOut,
+  updateProfile,
 } from "firebase/auth";
-import { Firestore, doc, getFirestore, setDoc } from "firebase/firestore";
-
-
+import { doc, setDoc, updateDoc } from "firebase/firestore";
 
 export const signUp = async (user: SignUpInputs) => {
   try {
@@ -63,4 +61,21 @@ export const logOut = () => {
   signOut(auth)
     .then(() => {})
     .catch((error) => {});
+};
+
+export const updateUserProfile = async (userData: EditorInputs) => {
+  if (auth.currentUser) {
+    const userRef = doc(db, "users", auth.currentUser.uid);
+
+    try {
+      await updateDoc(userRef, {
+        lastname: userData.lastname,
+        firstname: userData.firstname,
+        adress: userData.adress,
+        city: userData.city,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 };

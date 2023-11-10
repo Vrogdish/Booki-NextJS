@@ -1,17 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import Button from "./Button";
 import { logOut } from "@/api/auth";
 import Container from "./Container";
 import { UserInterface } from "@/types/user";
 import Announcement from "./Announcement";
+import UserEditor from "./UserEditor";
+import { useAuth } from "@/context/AuthUserContext";
 
 interface Props {
   user: UserInterface | null;
 }
 
 export default function MyAccount({ user }: Props) {
+  const [editorMode, setEditorMode] = useState(false);
+  
   const handleLogOut = async () => {
     await logOut();
+  };
+
+  const handleEdit = () => {
+    setEditorMode(true);
+  };
+
+  const handleCloseEdit = () => {
+    setEditorMode(false);
   };
 
   return (
@@ -25,11 +37,20 @@ export default function MyAccount({ user }: Props) {
           color="gray"
           className="w-full lg:w-1/2"
         >
-          <p>Nom : {user?.lastname}</p>
-          <p>Prénom : {user?.firstname}</p>
-          <p>Adresse : {user?.adress}</p>
-          <p>Ville : {user?.city}</p>
-          <p>Adresse Email : {user?.email}</p>
+          {!editorMode ? (
+            <>
+              <p>Nom : {user?.lastname}</p>
+              <p>Prénom : {user?.firstname}</p>
+              <p>Adresse : {user?.adress}</p>
+              <p>Ville : {user?.city}</p>
+              <p>Adresse Email : {user?.email}</p>
+              <Button type="button" action={handleEdit} className="mt-10">
+                Modifier
+              </Button>
+            </>
+          ) : (
+            <UserEditor user={user} closeEditor={handleCloseEdit} />
+          )}
         </Container>
         <Container
           title="Mon historique de réservation :"
@@ -39,19 +60,16 @@ export default function MyAccount({ user }: Props) {
           <p>Aucune réservation n&apos;a encore été efféctuée</p>
         </Container>
       </div>
-      <Container>
-
-      </Container>
       <div className="flex w-full">
         <Button
           type="button"
           action={handleLogOut}
           theme="alert"
-          className="w-60 m-auto mb-20"
+          className="w-60 m-auto my-20"
         >
           Se deconnecter
         </Button>
-             </div>
+      </div>
     </div>
   );
 }
