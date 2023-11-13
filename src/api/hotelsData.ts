@@ -1,4 +1,4 @@
-import { app, db } from "@/firebase/config";
+import {  db } from "@/firebase/config";
 import { Activity, Hotel } from "@/types/data-firebase";
 import {
   collection,

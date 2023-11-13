@@ -1,7 +1,5 @@
 import React from "react";
 import Image from "next/image";
-
-import { DocumentData } from "firebase/firestore";
 import Rating from "./Rating";
 import { Hotel } from "@/types/data-firebase";
 
@@ -30,8 +28,6 @@ if (cardStyle === "col") {
       };
 }
 
-
-
   return (
     <article className={style.card}>
       <Image
@@ -40,6 +36,7 @@ if (cardStyle === "col") {
         width={600}
         height={600}
         alt={cardItem.name}
+        priority
       />
       <div className="flex flex-col justify-between mx-4 ">
         <div>

@@ -1,7 +1,4 @@
-"use client";
-
 import { getHotelRetails } from "@/api/hotelsData";
-import { useParams } from "next/navigation";
 import Image from "next/image";
 import Rating from "@/components/Rating";
 import Activities from "@/components/Activities";
@@ -9,8 +6,7 @@ import ScrollToTop from "@/utils/ScrollToTop";
 import BookIt from "@/components/BookIt";
 import Container from "@/components/Container";
 
-export default async function Retails() {
-  const params: any = useParams();
+export default async function Retails({params}: {params : {id : string}}) {
   const id = Number(params.id);
   const hotel = await getHotelRetails(id);
 
@@ -30,6 +26,8 @@ export default async function Retails() {
               fill
               alt="chambre d'hôtel"
               className="absolute h-96 xl:rounded-l-2xl w-full object-cover"
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              priority
             ></Image>
           </div>
           <div className="flex flex-col justify-between gap-6 md:p-6 ">

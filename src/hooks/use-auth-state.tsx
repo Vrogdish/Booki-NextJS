@@ -1,8 +1,7 @@
 import { auth, db } from "@/firebase/config";
-import { EditorInputs } from "@/types/inputs";
 import { UserInterface } from "@/types/user";
 import { User, onAuthStateChanged } from "firebase/auth";
-import { doc, onSnapshot, updateDoc } from "firebase/firestore";
+import { doc, onSnapshot} from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 export default function useAuthState() {
@@ -30,27 +29,6 @@ export default function useAuthState() {
       });
     }
   };
-
-  // const updateUserProfil = async(userData : EditorInputs) => {
-  //   if (auth.currentUser) {
-  //     const userRef = doc(db, "users", auth.currentUser.uid);
-  
-  //     try {
-  //       await updateDoc(userRef, {
-  //         lastname: userData.lastname,
-  //         firstname: userData.firstname,
-  //         adress: userData.adress,
-  //         city: userData.city,
-
-  //       });
-   
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  // }
-
- 
 
   const authStateChanged = async (authState: User | UserInterface | null) => {
     if (!authState) {

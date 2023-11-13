@@ -4,7 +4,6 @@ import Button from "./Button";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { EditorInputs } from "@/types/inputs";
 import { updateUserProfile } from "@/api/auth";
-import { useAuth } from "@/context/AuthUserContext";
 
 interface Props {
   user: UserInterface | null;

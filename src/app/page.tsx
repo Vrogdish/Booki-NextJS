@@ -11,10 +11,11 @@ import { Hotel } from "@/types/data-firebase";
 import Container from "@/components/Container";
 
 export default function Home() {
-  const [hotels, setHotels] = useState<Hotel[]>([]);
+  const [hotels, setHotels] = useState<Hotel[]>();
   const [bestHotels, setBestHotels] = useState<Hotel[]>([]);
   const [city, setCity] = useState("Marseille");
   const [tag, setTag] = useState("");
+  const [isLoading, setIsloading] = useState(true);
 
   const search = (data: Inputs) => {
     // gestion majuscule
@@ -30,16 +31,20 @@ export default function Home() {
 
   useEffect(() => {
     const displayHotels = async () => {
+      setIsloading(true);
       const result = await getHotels(city);
-      const filteredHotlels = result.filter((hotel) => hotel.tag === tag);
-      const bestHotels = result.filter((hotel) => hotel.rating >= 4);
+      if (result) {
+        const filteredHotlels = result.filter((hotel) => hotel.tag === tag);
+        const bestHotels = result.filter((hotel) => hotel.rating >= 4);
 
-      if (tag != "") {
-        setHotels(filteredHotlels);
-      } else {
-        setHotels(result);
+        if (tag != "") {
+          setHotels(filteredHotlels);
+        } else {
+          setHotels(result);
+        }
+        setBestHotels(bestHotels);
       }
-      setBestHotels(bestHotels);
+      setIsloading(false);
     };
 
     displayHotels();
@@ -56,14 +61,20 @@ export default function Home() {
           className="w-full xl:w-2/3"
           columns={"3"}
         >
-          {hotels.length != 0 ? (
-            hotels.map((hotel, index) => (
-              <Link href={`/Retails/${hotel.id}`} key={index}>
-                <Card cardItem={hotel} cardStyle={"col"} />
-              </Link>
-            ))
+          {!isLoading ? (
+            hotels && hotels.length != 0 ? (
+              hotels.map((hotel, index) => (
+                <Link href={`/Retails/${hotel.id}`} key={index}>
+                  <Card cardItem={hotel} cardStyle={"col"} />
+                </Link>
+              ))
+            ) : (
+              <div className="py-20">
+                Désolé, aucun résultat ne correspond à votre recherche
+              </div>
+            )
           ) : (
-            <div>Désolé, aucun résultat ne correspond à votre recherche</div>
+            <div className="py-20">Chargement en cours ...</div>
           )}
         </Container>
 
@@ -79,9 +90,8 @@ export default function Home() {
           ))}
         </Container>
       </div>
-      
-        <Activities city={city} />
-     
+
+      <Activities city={city} />
     </main>
   );
 }
